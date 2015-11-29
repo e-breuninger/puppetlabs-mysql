@@ -93,6 +93,8 @@ if [ $? -eq 0 ] ; then
 fi
 <% end -%>
 
+# Postscripts, access variables like $DURATION, $FAILED_BACKUPS and $NR_BACKUPS to execute scripts which notify your monitoring system
+# i.e. /usr/bin/zabbix_sender -vvvv -c /etc/zabbix/zabbix_agentd.conf  -k mysql.backup.globalstatus -o "$RUNSTATUS"
 <% if @postscript -%>
   <%- [@postscript].flatten.compact.each do |script|%>
 <%= script %>
