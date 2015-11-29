@@ -253,6 +253,9 @@ Class['mysql::bindings']
 * [`mysql::server::backup`](#mysqlserverbackup): Sets up MySQL backups via cron.
 * [`mysql::bindings`](#mysqlbindings): Installs various MySQL language bindings.
 * [`mysql::client`](#mysqlclient): Installs MySQL client (for non-servers).
+* [`mysql::backup::mysqldump`]: Implements mysqldump backups.
+* [`mysql::backup::mysqlbackup`]: Implements backups with Oracle MySQL Enterprise Backup.
+* [`mysql::backup::xtrabackup`]: Implements backups with XtraBackup from Percona.
 
 #### Private classes
 
@@ -271,9 +274,6 @@ Class['mysql::bindings']
 * `mysql::bindings::python`: Installs Python bindings.
 * `mysql::bindings::ruby`: Installs Ruby bindings.
 * `mysql::client::install`:  Installs MySQL client.
-* `mysql::backup::mysqldump`: Implements mysqldump backups.
-* `mysql::backup::mysqlbackup`: Implements backups with Oracle MySQL Enterprise Backup.
-* `mysql::backup::xtrabackup`: Implements backups with XtraBackup from Percona.
 
 ### Parameters
 
@@ -509,6 +509,10 @@ Sets the server backup implementation. Valid values are:
 * `mysqldump`: Implements backups with mysqldump. Backup type: Logical. This is the default value.
 * `mysqlbackup`: Implements backups with MySQL Enterprise Backup from Oracle. Backup type: Physical. To use this type of backup, you'll need the `meb` package, which is available in RPM and TAR formats from Oracle. For Ubuntu, you can use [meb-deb](https://github.com/dveeden/meb-deb) to create a package from an official tarball.
 * `xtrabackup`: Implements backups with XtraBackup from Percona. Backup type: Physical.
+
+##### `template`
+
+A name of a custom erb template to create a backup script.
 
 #### mysql::server::monitor
 
