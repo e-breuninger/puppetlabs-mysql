@@ -22,7 +22,7 @@ class mysql::backup::mysqldump (
   $prescript          = false,
   $postscript         = false,
   $execpath           = '/usr/bin:/usr/sbin:/bin:/sbin',
-  $template           = 'backup/mysqldump.pp',
+  $template           = 'mysql/mysqldump.sh.erb',
   $template_params    = {},
 ) {
 
