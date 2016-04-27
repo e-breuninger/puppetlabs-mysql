@@ -1,6 +1,6 @@
 # See README.me for usage.
 class mysql::backup::mysqldump (
-  $backupconfig       = '/etc/mysql/mysqlbackup.cnf',
+  $backupconfig       = '/etc/mysqlbackup.cnf',
   $backupuser         = '',
   $backuppassword     = '',
   $backupdir          = '',
@@ -30,7 +30,7 @@ class mysql::backup::mysqldump (
   if $template {
     $template_set = $template
   }else{
-    $template_set = 'mysql/mysqlbackup.sh.erb'
+    $template_set = 'mysql/mysqldump.sh.erb'
   }
 
   mysql_user { "${backupuser}@localhost":
@@ -70,10 +70,9 @@ class mysql::backup::mysqldump (
     group   => $mysql::params::root_group,
     content => template($template_set),
   }
-
   file { 'mysqlbackup.cnf':
     ensure  => $ensure,
-    path    => '/etc/mysql/mysqlbackup.cnf',
+    path    => $backupconfig,
     mode    => '0700',
     owner   => 'root',
     group   => $mysql::params::root_group,
