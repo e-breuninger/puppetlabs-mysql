@@ -31,6 +31,13 @@ class mysql::backup::xtrabackup (
     $template_set = 'mysql/xtrabackup.sh.erb'
   }
 
+  # we do not use a default value in the class variable to have the possibility to use mysql::server::backup as a facade
+  if $template {
+    $template_set = $template
+  }else{
+    $template_set = 'mysql/xtrabackup.sh.erb'
+  }
+
   package{ 'percona-xtrabackup':
     ensure  => $ensure,
   }

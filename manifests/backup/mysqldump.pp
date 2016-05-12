@@ -35,6 +35,13 @@ class mysql::backup::mysqldump (
     $template_set = 'mysql/mysqlbackup.sh.erb'
   }
 
+  # we do not use a default value in the class variable to have the possibility to use mysql::server::backup as a facade
+  if $template {
+    $template_set = $template
+  }else{
+    $template_set = 'mysql/mysqlbackup.sh.erb'
+  }
+
   mysql_user { "${backupuser}@localhost":
     ensure        => $ensure,
     password_hash => mysql_password($backuppassword),
@@ -86,6 +93,18 @@ user=${backupuser}
     "
   }
 
+  file { 'mysqlbackup.cnf':
+    ensure  => $ensure,
+    path    => '/etc/mysql/mysqlbackup.cnf',
+    mode    => '0700',
+    owner   => 'root',
+    group   => $mysql::params::root_group,
+    content => "
+[client]
+password=${backuppassword}
+user=${backupuser}
+    "
+  }
 
   file { 'mysqlbackupdir':
     ensure => 'directory',
